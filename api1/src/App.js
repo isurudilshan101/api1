@@ -13,21 +13,36 @@ class App extends Component{
 
       componentDidMount(){
         fetch('https://jsonplaceholder.typicode.com/users')
-        .then(res=>json())
+        .then(res=>res.json())
         .then(json=>{
           this.setState({
-            isLoaded:true,
+            isLoaded:true, 
             items:json
           })
         });
       }    
 
   render(){
-    return(
-      <div className="App"> 
 
-      </div>
-    );
+    var {isLoaded,items}=this.state;
+    if(!isLoaded){
+      return <div>Loading ...</div>;
+
+    }
+    else{
+      return(
+        <div className="App"> 
+        <ul>
+          {items.map(items=>(
+              <li key={items.id}>
+              Name:    {items.name} |  Email:{items.email}
+              </li>
+          ))};
+        </ul>
+        </div>
+      );
+    }
+  
   }
 }
 
